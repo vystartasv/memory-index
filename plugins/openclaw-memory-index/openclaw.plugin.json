@@ -1,0 +1,11 @@
+{
+  "id": "memory-index-local",
+  "name": "Memory Index Local",
+  "description": "Thin local OpenClaw wrapper around the memory-index engine for one-machine recall.",
+  "kind": "memory",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

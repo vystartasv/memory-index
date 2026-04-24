@@ -1,0 +1,67 @@
+{
+  "name": "@vystartas/openclaw-memory-plugin",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Local-first OpenClaw memory plugin with file-backed core memory and SQLite/FTS5 long-term recall",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "openclaw.plugin.json",
+    "README.md"
+  ],
+  "scripts": {
+    "prebuild": "node ./scripts/sync-openclaw-entry.mjs",
+    "build": "tsc -p tsconfig.json",
+    "plugin:clean": "trash ~/.openclaw/extensions/memory-index-local 2>/dev/null || true",
+    "plugin:install": "openclaw plugins install .",
+    "plugin:allow": "openclaw config set plugins.allow[] memory-index-local && openclaw config set plugins.entries.memory-index-local.enabled true",
+    "plugin:install:force": "openclaw plugins install . --force",
+    "plugin:dev-sync": "mkdir -p ~/.openclaw/extensions/memory-index-local && cp openclaw.plugin.json ~/.openclaw/extensions/memory-index-local/openclaw.plugin.json && cp package.json ~/.openclaw/extensions/memory-index-local/package.json && cp package-lock.json ~/.openclaw/extensions/memory-index-local/package-lock.json && rm -rf ~/.openclaw/extensions/memory-index-local/dist && cp -R dist ~/.openclaw/extensions/memory-index-local/dist && npm ci --prefix ~/.openclaw/extensions/memory-index-local --ignore-scripts",
+    "plugin:reinstall": "npm run plugin:clean && npm run plugin:install",
+    "plugin:rebuild": "npm run build && npm run plugin:dev-sync",
+    "release:prepare": "npm run build && node ./scripts/prepare-release.mjs",
+    "release:pack": "npm pack",
+    "release:all": "npm run release:prepare && npm run release:pack"
+  },
+  "openclaw": {
+    "extensions": [
+      "./dist/index.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vystartasv/memory-index.git",
+    "directory": "plugins/openclaw-memory-index"
+  },
+  "homepage": "https://github.com/vystartasv/memory-index/tree/main/plugins/openclaw-memory-index",
+  "bugs": {
+    "url": "https://github.com/vystartasv/memory-index/issues"
+  },
+  "keywords": [
+    "openclaw",
+    "plugin",
+    "memory",
+    "recall",
+    "microsoft",
+    "agent"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.41",
+    "better-sqlite3": "^12.4.1",
+    "glob": "^11.0.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

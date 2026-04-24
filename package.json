@@ -1,0 +1,29 @@
+{
+  "name": "memory-index",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first hybrid memory search for markdown notes and transcripts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "index": "tsx src/cli.ts index",
+    "search": "tsx src/cli.ts search",
+    "benchmark": "tsx src/cli.ts benchmark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:vystartasv/memory-index.git"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "glob": "^11.0.3"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^24.6.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}
